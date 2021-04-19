@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/index.js",
     "build": "tsc",
-    "start": "node ./dist/index.js",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
+    "postinstall": "tsc",
+    "watch-node": "nodemon dist/index.js",
+    "watch-ts": "tsc -w",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "author": "Henry Chu",
   "license": "ISC",
@@ -27,5 +30,8 @@
   "devDependencies": {
     "nodemon": "^2.0.7",
     "typescript": "^4.2.3"
+  },
+  "engines": {
+    "node": "15.6.0"
   }
 }
