@@ -1,12 +1,10 @@
 import { Command, CommandMessage, Guard } from '@typeit/discord';
-import * as Discord from 'discord.js';
 import { NotBot } from '../guards/notABot';
 import { admin } from '../guards/admin';
 
 import monitorCourses from '../scripts/monitorCourses';
 
 import Settings from '../models/settings';
-import Users from '../models/users';
 
 export default abstract class on {
   @Command('on')
@@ -54,42 +52,6 @@ export default abstract class on {
         .catch((err) => console.log(err));
 
       monitorCourses();
-
-      const snipeUsersArray: any[] = await Users.find();
-
-      const embed = new Discord.MessageEmbed()
-        .setColor('#FF0000')
-        .setTitle('Rutgers Course Sniper')
-        .setDescription('Course Sniper Status - ON 🟢')
-        .setTimestamp();
-
-      for (let user of snipeUsersArray) {
-        if (user.webhook.length != 0 && user.courses.length != 0) {
-          let split = user.webhook.split('/');
-          let id = split[5];
-          let token = split[6];
-          let webhook = new Discord.WebhookClient(id, token);
-
-          try {
-            await webhook
-              .send(embed)
-              .then(() => {
-                console.log('Webhook successfully sent\n');
-              })
-              .catch((err) => {
-                if (err.message == 'Unknown Webhook') {
-                  throw new Error('Unknown webhook');
-                } else if (err.message == 'Invalid Webhook Token') {
-                  throw new Error('Invalid webhook token');
-                } else {
-                  throw new Error(err);
-                }
-              });
-          } catch (err) {
-            console.log(err);
-          }
-        }
-      }
     } else {
       await message.channel.send('```Snipe is already on```');
       console.log('!snipe on completed\n');
