@@ -137,7 +137,7 @@ export default abstract class Add {
       if (err.message == 'Max retries') {
         await message.channel.send('```Rutgers server error - max retries reached\nPlease try again```');
       } else {
-        await message.channel.send('```Unexpected error!```');
+        await message.channel.send('```Rutgers server error - max retries reached\nPlease try again```');
       }
       return;
     }
@@ -259,9 +259,7 @@ async function getCourses(): Promise<string[]> {
       );
     } catch (err) {
       if (
-        !err.message.includes(
-          `request to http://sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB failed`
-        ) &&
+        !err.message.includes(`failed`) &&
         !err.message.includes(
           `https://sorry.rutgers.edu/index.html?sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB`
         )

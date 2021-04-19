@@ -24,7 +24,7 @@ export class Monitor extends EventEmitter {
   init = async () => {
     let date = new Date(Date.now());
     year = String(date.getFullYear());
-    let month = date.getMonth();
+    let month = date.getMonth() + 1;
 
     if (month > 3 && month < 11) {
       term = String(9);
