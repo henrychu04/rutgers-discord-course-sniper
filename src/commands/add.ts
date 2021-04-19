@@ -179,7 +179,7 @@ export default abstract class Add {
         console.log(err);
 
         if (err.message == 'Invalid section') {
-          message.channel.send('```One or more sections is not in the correct format```');
+          message.channel.send('```One or more sections does not exist```');
         } else {
           message.channel.send('```Unexpected error!```');
         }
@@ -232,25 +232,38 @@ function findSection(json: any[], num: any): any[] {
 }
 
 async function getCourses(): Promise<string[]> {
+  let date = new Date(Date.now());
+  let year = String(date.getFullYear());
+  let month = date.getMonth() + 1;
+  let term = '';
+
+  if (month > 3 && month < 11) {
+    term = String(9);
+  } else if (month > 11 && month < 4) {
+    term = String(1);
+  }
+
   let success = false;
   let count = 0;
   let res = null;
 
   while (!success) {
     try {
-      res = await fetch('http://sis.rutgers.edu/soc/api/courses.gzip?year=2021&term=1&campus=NB').then((res) => {
-        if (res.status == 200) {
-          success = true;
-          return res.json();
+      res = await fetch(`http://sis.rutgers.edu/soc/api/courses.gzip?year=${year}&term=${term}&campus=NB`).then(
+        (res) => {
+          if (res.status == 200) {
+            success = true;
+            return res.json();
+          }
         }
-      });
+      );
     } catch (err) {
       if (
         !err.message.includes(
-          'request to http://sis.rutgers.edu/soc/api/openSections.gzip?year=2021&term=1&campus=NB failed'
+          `request to http://sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB failed`
         ) &&
         !err.message.includes(
-          'https://sorry.rutgers.edu/index.html?sis.rutgers.edu/soc/api/openSections.gzip?year=2021&term=1&campus=NB'
+          `https://sorry.rutgers.edu/index.html?sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB`
         )
       ) {
         console.log(err);

@@ -2,13 +2,12 @@ import { Command, CommandMessage, Guard } from '@typeit/discord';
 import * as Discord from 'discord.js';
 import { NotBot } from '../guards/notABot';
 
-import Settings from '../models/settings';
 import Users from '../models/users';
 
-export default class Snipes {
-  @Command('snipes')
+export default class Snipe {
+  @Command('snipe')
   @Guard(NotBot)
-  async snipes(message: CommandMessage) {
+  async snipe(message: CommandMessage) {
     const d_id = message.author.id;
     const snipeUsers: any[] = await Users.find({ d_id: d_id });
 
@@ -22,7 +21,7 @@ export default class Snipes {
     if (snipeUsers.length != 0) {
       for (let course of snipeUsers[0].courses) {
         embed.addFields({
-          name: `${course.name == '' ? 'Invalid section number or name not yet set' : course.name}`,
+          name: course.name,
           value: `Section: ${course.num}`,
           inline: true,
         });

@@ -1,7 +1,7 @@
 import { Command, CommandMessage, Guard } from '@typeit/discord';
 import { NotBot } from '../guards/notABot';
 import { isDM } from '../guards/isDM';
-import Snipes from './snipes';
+import Snipe from './snipe';
 
 import Users from '../models/users';
 
@@ -13,8 +13,8 @@ export default abstract class Remove {
     const d_id: string = message.author.id;
     const snipeUsersArray: any[] = await Users.find({ d_id: d_id });
 
-    let allSnipes = new Snipes();
-    await allSnipes.snipes(message);
+    let allSnipes = new Snipe();
+    await allSnipes.snipe(message);
 
     await message.channel.send(
       '```' +

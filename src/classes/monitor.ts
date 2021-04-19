@@ -10,6 +10,9 @@ import Users from '../models/users';
 const oneSecond = 1000;
 const oneHour = 60000;
 
+let year = '';
+let term = '';
+
 export class Monitor extends EventEmitter {
   courses: string[] = [];
 
@@ -19,6 +22,16 @@ export class Monitor extends EventEmitter {
   }
 
   init = async () => {
+    let date = new Date(Date.now());
+    year = String(date.getFullYear());
+    let month = date.getMonth();
+
+    if (month > 3 && month < 11) {
+      term = String(9);
+    } else if (month > 11 && month < 4) {
+      term = String(1);
+    }
+
     while (1) {
       try {
         let status: Boolean = await checkStatus();
@@ -141,7 +154,7 @@ let refresh = async (): Promise<string[]> => {
 
   while (!success) {
     try {
-      courseRes = await fetch('http://sis.rutgers.edu/soc/api/openSections.gzip?year=2021&term=9&campus=NB', {
+      courseRes = await fetch(`http://sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB`, {
         method: 'GET',
         headers: {
           'User-Agent':
@@ -159,10 +172,10 @@ let refresh = async (): Promise<string[]> => {
     } catch (err) {
       if (
         !err.message.includes(
-          'request to http://sis.rutgers.edu/soc/api/openSections.gzip?year=2021&term=9&campus=NB failed'
+          `request to http://sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB failed`
         ) &&
         !err.message.includes(
-          'https://sorry.rutgers.edu/index.html?sis.rutgers.edu/soc/api/openSections.gzip?year=2021&term=9&campus=NB'
+          `https://sorry.rutgers.edu/index.html?sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB`
         )
       ) {
         console.log(err);
@@ -181,7 +194,7 @@ let refresh = async (): Promise<string[]> => {
 
 let buildArrays = (changedArray: any[] | string[]) => {
   let linkArray: string[] = [];
-  let link = `http://sims.rutgers.edu/webreg/editSchedule.htm?login=cas&semesterSelection=92021&indexList=`;
+  let link = `http://sims.rutgers.edu/webreg/editSchedule.htm?login=cas&semesterSelection=${term}${year}&indexList=`;
   let namesArray: string[] = [];
   let names = '';
 
@@ -189,7 +202,7 @@ let buildArrays = (changedArray: any[] | string[]) => {
     if (i % 10 == 0 && i != 0) {
       linkArray.push(link);
       namesArray.push(names);
-      link = 'http://sims.rutgers.edu/webreg/editSchedule.htm?login=cas&semesterSelection=92021&indexList=';
+      link = `http://sims.rutgers.edu/webreg/editSchedule.htm?login=cas&semesterSelection=${term}${year}&indexList=`;
       names = '';
     }
 
@@ -199,7 +212,7 @@ let buildArrays = (changedArray: any[] | string[]) => {
     console.log(`New open section: ${changedArray[i].num}\n`);
   }
 
-  if (link != 'http://sims.rutgers.edu/webreg/editSchedule.htm?login=cas&semesterSelection=92021&indexList=') {
+  if (link != `http://sims.rutgers.edu/webreg/editSchedule.htm?login=cas&semesterSelection=${term}${year}&indexList=`) {
     linkArray.push(link);
     namesArray.push(names);
   }
