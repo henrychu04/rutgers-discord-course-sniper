@@ -1,7 +1,6 @@
 import { Command, CommandMessage, Guard } from '@typeit/discord';
 import fetch from 'node-fetch';
 import { NotBot } from '../guards/notABot';
-import { isDM } from '../guards/isDM';
 
 import Course from '../classes/course';
 
@@ -10,7 +9,6 @@ import Users from '../models/users';
 export default abstract class Add {
   @Command('add')
   @Guard(NotBot)
-  //   @Guard(isDM)
   async add(message: CommandMessage) {
     const d_id: string = message.author.id;
     let usersArray: any[] = await Users.find({ d_id: d_id });
@@ -165,9 +163,9 @@ export default abstract class Add {
         let newCourse = new Course(s);
 
         if (timeString != null) {
-          newCourse.setName(`${courseString} ${title} ${instructor == '' ? '' : instructor + '- '}\n${timeString}`);
+          newCourse.setName(`${courseString} ${title} ${instructor == '' ? '' : instructor + ' - '}\n${timeString}`);
         } else {
-          newCourse.setName(`${courseString} ${title} ${instructor == '' ? '' : instructor + '- '}`);
+          newCourse.setName(`${courseString} ${title} ${instructor == '' ? '' : instructor}`);
         }
 
         await Users.updateOne({ d_id: d_id }, { $push: { courses: newCourse } })

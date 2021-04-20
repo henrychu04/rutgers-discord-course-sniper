@@ -13,4 +13,10 @@ export default async () => {
       }
     }
   });
+
+  newMonitor.on('newOpen', (user: { webhook: string; d_id: string }, courses: any[]) => {
+    if (user.webhook.length != 0) {
+      webhook(user, courses);
+    }
+  });
 };

@@ -1,14 +1,12 @@
 import * as Discord from 'discord.js';
 import { Command, CommandMessage, Guard } from '@typeit/discord';
 import { NotBot } from '../guards/notABot';
-import { isDM } from '../guards/isDM';
 
 import Users from '../models/users';
 
 export default abstract class Webhook {
   @Command('webhook')
   @Guard(NotBot)
-  //   @Guard(isDM)
   async webhook(message: CommandMessage): Promise<void> {
     let input: string = message.content.slice(9);
 

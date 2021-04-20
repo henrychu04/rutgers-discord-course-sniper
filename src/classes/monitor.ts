@@ -69,7 +69,7 @@ export class Monitor extends EventEmitter {
 
       try {
         let newCourses: string[] = await refresh();
-        let newOpen: any[] = [];
+        let newOpen: string[] = [];
 
         newCourses.forEach((course) => {
           if (!this.courses.includes(course)) {
@@ -83,15 +83,19 @@ export class Monitor extends EventEmitter {
         // const users: any[] = await Users.find();
         const users: any[] = await Users.find({ d_id: '504000540804382741' });
 
+        if (newOpen.length != 0) {
+          this.emit('newOpen', users[0], newOpen);
+        }
+
         for (let user of users) {
           let changedArray = [];
 
-          user.courses.forEach((course: { time: number; name: any; num: any }) => {
+          user.courses.forEach((course: { time: number; name: string; num: string }) => {
             const now = Date.now();
             const millis = now - course.time;
             const elapsed = Math.floor(millis / 1000); // convert to seconds
 
-            if (newOpen.includes(course) && elapsed > 60) {
+            if (newOpen.includes(course.num) && elapsed > 60) {
               let changed = {
                 name: course.name,
                 num: course.num,

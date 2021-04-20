@@ -1,6 +1,5 @@
 import { Command, CommandMessage, Guard } from '@typeit/discord';
 import { NotBot } from '../guards/notABot';
-import { isDM } from '../guards/isDM';
 import Snipe from './snipe';
 
 import Users from '../models/users';
@@ -8,7 +7,6 @@ import Users from '../models/users';
 export default abstract class Remove {
   @Command('remove')
   @Guard(NotBot)
-  //   @Guard(isDM)
   async remove(message: CommandMessage) {
     const d_id: string = message.author.id;
     const snipeUsersArray: any[] = await Users.find({ d_id: d_id });
