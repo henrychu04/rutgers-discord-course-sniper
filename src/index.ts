@@ -33,6 +33,7 @@ export class Main {
       monitorCourses();
       monitorUsers(this._client);
       console.log('Ready!');
+      this._client.user.setActivity(`'!help' for all commands`);
     });
   }
 }
