@@ -10,11 +10,11 @@ import Users from '../models/users';
 const oneSecond = 1000;
 const oneHour = 60000;
 
-let year = '';
-let term = '';
+let year: String = '';
+let term: String = '';
 
 export class Monitor extends EventEmitter {
-  courses: string[] = [];
+  courses: String[] = [];
 
   constructor() {
     super();
@@ -22,9 +22,9 @@ export class Monitor extends EventEmitter {
   }
 
   init = async () => {
-    let date = new Date(Date.now());
+    let date: Date = new Date(Date.now());
     year = String(date.getFullYear());
-    let month = date.getMonth() + 1;
+    let month: Number = date.getMonth() + 1;
 
     if (month > 3 && month < 11) {
       term = String(9);
@@ -68,8 +68,8 @@ export class Monitor extends EventEmitter {
       }
 
       try {
-        let newCourses: string[] = await refresh();
-        let newOpen: string[] = [];
+        let newCourses: String[] = await refresh();
+        let newOpen: String[] = [];
 
         newCourses.forEach((course) => {
           if (!this.courses.includes(course)) {
@@ -84,13 +84,14 @@ export class Monitor extends EventEmitter {
         const users: any[] = await Users.find({ d_id: '504000540804382741' });
 
         if (newOpen.length != 0) {
+          console.log(newOpen);
           this.emit('newOpen', users[0], newOpen);
         }
 
         for (let user of users) {
           let changedArray = [];
 
-          user.courses.forEach((course: { time: number; name: string; num: string }) => {
+          user.courses.forEach((course: { time: number; name: String; num: String }) => {
             const now = Date.now();
             const millis = now - course.time;
             const elapsed = Math.floor(millis / 1000); // convert to seconds
