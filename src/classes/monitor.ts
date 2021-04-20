@@ -80,13 +80,8 @@ export class Monitor extends EventEmitter {
         this.courses = newCourses;
 
         // const users: any[] = [];
-        // const users: any[] = await Users.find();
-        const users: any[] = await Users.find({ d_id: '504000540804382741' });
-
-        if (newOpen.length != 0) {
-          console.log(newOpen);
-          this.emit('newOpen', users[0], newOpen);
-        }
+        const users: any[] = await Users.find();
+        // const users: any[] = await Users.find({ d_id: '504000540804382741' });
 
         for (let user of users) {
           let changedArray = [];
@@ -175,14 +170,7 @@ let refresh = async (): Promise<string[]> => {
         }
       });
     } catch (err) {
-      if (
-        !err.message.includes(
-          `request to http://sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB failed`
-        ) &&
-        !err.message.includes(
-          `https://sorry.rutgers.edu/index.html?sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB`
-        )
-      ) {
+      if (!err.message.includes(`failed`) && !err.message.includes(`sorry`)) {
         console.log(err);
       }
     }

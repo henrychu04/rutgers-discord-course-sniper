@@ -23,7 +23,7 @@ export default abstract class Add {
       await newUser
         .save()
         .then(() => {
-          console.log(`Successfully added new user ${d_id}\n`);
+          console.log(`Successfully added new user ${d_id}`);
         })
         .catch((err) => {
           throw new Error(err);
