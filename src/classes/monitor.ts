@@ -8,7 +8,7 @@ import Settings from '../models/settings';
 import Users from '../models/users';
 
 const oneSecond = 1000;
-const oneHour = 60000;
+const oneHour = 3600000;
 
 let year: String = '';
 let term: String = '';
@@ -62,7 +62,8 @@ export class Monitor extends EventEmitter {
 
       const crntDate = moment().tz('America/New_York');
 
-      if (crntDate.hour() < 11 && crntDate.hour() > 6) {
+      if (crntDate.hour() > 22 && crntDate.hour() < 7) {
+        console.log('sleeping\n');
         await sleep(oneHour);
         continue;
       }
