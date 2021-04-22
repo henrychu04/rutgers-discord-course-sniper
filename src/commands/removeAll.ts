@@ -9,7 +9,7 @@ export default abstract class RemoveAll {
   @Guard(NotBot)
   @Guard(admin)
   async removeAll(message: CommandMessage) {
-    await message.channel.send('```' + `Entered command is '!snipe removeall'\nConfirm with 'y' or 'n'` + '```');
+    await message.channel.send('```' + `Entered command is '!removeall'\nConfirm with 'y' or 'n'` + '```');
 
     let stopped = false;
     let exit = false;

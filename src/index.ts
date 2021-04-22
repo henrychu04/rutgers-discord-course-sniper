@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: __dirname + '/../.env' });
 
 import monitorCourses from './scripts/monitorCourses';
-import monitorUsers from './scripts/monitorUsers';
 
 export class Main {
   private static _client: Client;
@@ -31,7 +30,6 @@ export class Main {
 
     this._client.login(process.env.BOT_TOKEN, `${__dirname}/events/*.ts`, `${__dirname}/events/*.js`).then(() => {
       monitorCourses();
-      monitorUsers(this._client);
       console.log('Ready!');
       this._client.user.setActivity(`'!help' for all commands`);
     });

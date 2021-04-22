@@ -187,17 +187,17 @@ export default abstract class Add {
 
     if (i == split.length) {
       await message.channel.send('```' + `Successfully added ${sectionString}` + '```').then(() => {
-        console.log('!snipe add completed\n');
+        console.log('!add completed\n');
       });
     }
 
     if (usersArray[0].webhook.length == 0) {
       await message.channel.send(
         '```' +
-          `To receive notifications, add a webhook with the command '!snipe webhook'\nFor more information about webhooks, read instructions in the Snipe Server` +
+          `To receive notifications, add a webhook with the command '!webhook'\nFor more information about webhooks, read instructions in the Snipe Server` +
           '```'
       );
-      await message.channel.send('```' + `Test webhook with the command '!snipe webhook test'` + '```');
+      await message.channel.send('```' + `Test webhook with the command '!webhook test'` + '```');
     }
   }
 }

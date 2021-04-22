@@ -9,7 +9,7 @@ export default abstract class off {
   @Guard(NotBot)
   @Guard(admin)
   async off(message: CommandMessage) {
-    await message.channel.send('```' + `Entered command is '!snipe off'\nConfirm with 'y' or 'n'` + '```');
+    await message.channel.send('```' + `Entered command is '!off'\nConfirm with 'y' or 'n'` + '```');
 
     let stopped = false;
     let exit = false;
@@ -49,8 +49,8 @@ export default abstract class off {
         })
         .catch((err) => console.log(err));
     } else {
-      await message.channel.send('```Snipe is already off```');
-      console.log('!snipe off completed\n');
+      await message.channel.send('```Monitoring is already off```');
+      console.log('!off completed\n');
     }
   }
 }

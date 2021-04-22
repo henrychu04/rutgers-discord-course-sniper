@@ -11,7 +11,7 @@ export default abstract class on {
   @Guard(NotBot)
   @Guard(admin)
   async on(message: CommandMessage) {
-    await message.channel.send('```' + `Entered command is '!snipe on'\nConfirm with 'y' or 'n'` + '```');
+    await message.channel.send('```' + `Entered command is '!on'\nConfirm with 'y' or 'n'` + '```');
 
     let stopped = false;
     let exit = false;
@@ -53,8 +53,8 @@ export default abstract class on {
 
       monitorCourses();
     } else {
-      await message.channel.send('```Snipe is already on```');
-      console.log('!snipe on completed\n');
+      await message.channel.send('```Monitoring is already on```');
+      console.log('!on completed\n');
     }
   }
 }

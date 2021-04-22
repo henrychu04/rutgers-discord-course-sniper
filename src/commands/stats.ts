@@ -28,7 +28,7 @@ export default abstract class Stats {
     await message.channel
       .send('```' + `Users: ${snipeUsersArray.length}\nCourses: ${courses}\nNo webhook: ${noWebhook}` + '```')
       .then(() => {
-        console.log('!snipe stats completed\n');
+        console.log('!stats completed\n');
       });
   }
 }

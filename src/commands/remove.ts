@@ -138,7 +138,7 @@ export default abstract class Remove {
 
       if (i == split.length) {
         await message.channel.send('```' + `Successfully removed ${sectionString}` + '```').then(() => {
-          console.log('!snipe remove completed\n');
+          console.log('!remove completed\n');
         });
       }
     }
