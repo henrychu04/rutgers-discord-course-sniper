@@ -10,7 +10,8 @@ export default async (
     | symbol
     | readonly any[]
     | (Discord.WebhookMessageOptions & { split?: false })
-    | Discord.MessageAdditions
+    | Discord.MessageAdditions,
+  tag: string | any[]
 ) => {
   let split = user.webhook.split('/');
   let id = split[5];
@@ -38,6 +39,28 @@ export default async (
             throw new Error(err);
           }
         });
+
+      if (tag.length != 0) {
+        for (let crnt of tag) {
+          await webhook
+            .send(`<@${crnt}>`)
+            .then(() => {
+              success = true;
+              console.log(`User: ${user.d_id}\nSuccessfully tagged users`);
+            })
+            .catch((err) => {
+              if (err.message == 'Unknown Webhook') {
+                throw new Error('Unknown webhook');
+              } else if (err.message == 'Invalid Webhook Token') {
+                throw new Error('Invalid webhook token');
+              } else {
+                throw new Error(err);
+              }
+            });
+        }
+
+        console.log('\n');
+      }
 
       count++;
 

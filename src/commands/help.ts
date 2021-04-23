@@ -19,7 +19,9 @@ export default abstract class Help {
           value: 'Add a webhook to receive notifications of open courses',
           inline: false,
         },
-        { name: '!webhook test', value: `Test the user's webhook link to receive notifications`, inline: false }
+        { name: '!webhook test', value: `Test the user's webhook link to receive notifications`, inline: false },
+        { name: '!tag', value: 'Tag a user when a specified section opens up', inline: false },
+        { name: '!tagremove', value: 'Remove a user tag when a specified section opens up', inline: false }
       )
       .setTimestamp();
 

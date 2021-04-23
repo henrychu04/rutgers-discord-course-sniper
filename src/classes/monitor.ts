@@ -87,9 +87,10 @@ export class Monitor extends EventEmitter {
         const now = Date.now();
 
         for (let user of users) {
-          let changedArray = [];
+          let changedArray: any[] = [];
+          let tag: String[] = [];
 
-          user.courses.forEach((course: { time: number; name: String; num: String }) => {
+          user.courses.forEach((course: { time: number; name: String; num: String; tag: String[] }) => {
             const millis = now - course.time;
             const elapsed = Math.floor(millis / 1000); // convert to seconds
 
@@ -98,6 +99,14 @@ export class Monitor extends EventEmitter {
                 name: course.name,
                 num: course.num,
               };
+
+              if (course.tag && course.tag.length != 0) {
+                for (let crnt of course.tag) {
+                  if (!tag.includes(crnt)) {
+                    tag.push(crnt);
+                  }
+                }
+              }
 
               changedArray.push(changed);
 
@@ -126,7 +135,13 @@ export class Monitor extends EventEmitter {
               embedArray.push(embed);
             }
 
-            this.emit('open', user, embedArray);
+            let returnObj = {
+              user: user,
+              embedArray: embedArray,
+              tag: tag,
+            };
+
+            this.emit('open', returnObj);
           }
         }
       } catch (err) {

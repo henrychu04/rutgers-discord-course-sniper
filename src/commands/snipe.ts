@@ -20,9 +20,18 @@ export default class Snipe {
 
     if (snipeUsers.length != 0) {
       for (let course of snipeUsers[0].courses) {
+        let valueString = `Section: ${course.num}`;
+
+        if (course.tag && course.tag.length != 0) {
+          valueString += '\nTags: ';
+          for (let tag of course.tag) {
+            valueString += `<@${tag}> `;
+          }
+        }
+
         embed.addFields({
           name: course.name,
-          value: `Section: ${course.num}`,
+          value: valueString,
           inline: true,
         });
       }

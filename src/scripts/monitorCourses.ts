@@ -6,10 +6,12 @@ export default async () => {
 
   console.log('Course monitor started ...\n');
 
-  newMonitor.on('open', (user: { webhook: string; d_id: string }, embedArray: any) => {
+  newMonitor.on('open', (obj) => {
+    let { user, embedArray, tag } = obj;
+
     if (user.webhook.length != 0) {
       for (let embed of embedArray) {
-        webhook(user, embed);
+        webhook(user, embed, tag);
       }
     }
   });
