@@ -62,8 +62,8 @@ export class Monitor extends EventEmitter {
 
       const crntDate = moment().tz('America/New_York');
 
-      if (crntDate.hour() > 22 && crntDate.hour() < 7) {
-        console.log('sleeping\n');
+      if (crntDate.hour() > 22 || crntDate.hour() < 7) {
+        console.log('sleeping ... waiting one hour\n');
         await sleep(oneHour);
         continue;
       }
@@ -84,11 +84,12 @@ export class Monitor extends EventEmitter {
         const users: any[] = await Users.find();
         // const users: any[] = await Users.find({ d_id: '504000540804382741' });
 
+        const now = Date.now();
+
         for (let user of users) {
           let changedArray = [];
 
           user.courses.forEach((course: { time: number; name: String; num: String }) => {
-            const now = Date.now();
             const millis = now - course.time;
             const elapsed = Math.floor(millis / 1000); // convert to seconds
 
