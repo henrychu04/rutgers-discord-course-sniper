@@ -37,7 +37,7 @@ export default abstract class RemoveTag {
     }
 
     await message.channel.send(
-      '```' + `Enter course(s) to remove tags\n\nExample:\n\t12345 12345\n\nEnter 'n' to cancel` + '```'
+      '```' + `Enter sections(s) to remove tags\n\nExample:\n\t12345 12345\n\nEnter 'n' to cancel` + '```'
     );
 
     let valid = false;
@@ -104,7 +104,9 @@ export default abstract class RemoveTag {
     stopped = false;
 
     await message.channel.send(
-      '```' + `Enter user(s) to remove tags\n\nExample:\n\t@henry04 @Snipe mf.\n\nEnter 'n' to cancel` + '```'
+      '```' +
+        `Enter user id(s) to remove tags\n\nExample:\n\t504000540804382741 820061497967247370\n\nLink for more information: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID\n\nEnter 'n' to cancel` +
+        '```'
     );
 
     const collector2 = message.channel.createMessageCollector((msg) => msg.author.id == message.author.id, {
@@ -112,24 +114,23 @@ export default abstract class RemoveTag {
     });
 
     for await (const m of collector2) {
+      split = m.content.split(' ');
+
       if (m.content.toLowerCase() == 'n') {
         collector2.stop();
         stopped = true;
         exit = true;
       } else {
-        if (m.mentions.users.size != 0) {
-          valid = true;
+        valid = true;
 
-          for (let user of m.mentions.users) {
-            for (let course of courseArray) {
-              if (course.tag && course.tag.includes(user[0])) {
-                let tagIndex = course.tag.indexOf(user[0]);
-                course.tag.splice(tagIndex, 1);
-              }
+        for (let id of split) {
+          console.log(id);
+          for (let course of courseArray) {
+            if (course.tag && course.tag.includes(id)) {
+              let tagIndex = course.tag.indexOf(id);
+              course.tag.splice(tagIndex, 1);
             }
           }
-        } else {
-          m.channel.send('```Enter user(s) to tag```');
         }
 
         if (valid) {

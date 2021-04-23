@@ -30,7 +30,7 @@ export class Main {
 
     this._client.login(process.env.BOT_TOKEN, `${__dirname}/events/*.ts`, `${__dirname}/events/*.js`).then(() => {
       monitorCourses();
-      console.log('Ready!');
+      console.log('Ready!\n');
       this._client.user.setActivity(`'!help' for all commands`);
     });
   }
