@@ -256,12 +256,7 @@ async function getCourses(): Promise<string[]> {
         }
       );
     } catch (err) {
-      if (
-        !err.message.includes(`failed`) &&
-        !err.message.includes(
-          `https://sorry.rutgers.edu/index.html?sis.rutgers.edu/soc/api/openSections.gzip?year=${year}&term=${term}&campus=NB`
-        )
-      ) {
+     if (!err.message.includes(`failed`) && !err.message.includes(`sorry`)) {
         console.log(err);
       }
     }
