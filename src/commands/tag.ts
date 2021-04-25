@@ -1,5 +1,4 @@
 import { Command, CommandMessage, Guard } from '@typeit/discord';
-import * as Discord from 'discord.js';
 import { NotBot } from '../guards/notABot';
 import Snipe from './snipe';
 
