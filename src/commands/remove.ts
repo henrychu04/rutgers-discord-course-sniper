@@ -54,6 +54,7 @@ export default abstract class Remove {
 
     for await (const message of collector) {
       split = message.content.split(' ');
+      console.log('Sections is', split);
 
       if (message.content.toLowerCase() == 'n') {
         collector.stop();

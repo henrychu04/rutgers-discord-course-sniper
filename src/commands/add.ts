@@ -70,6 +70,7 @@ export default abstract class Add {
 
     for await (const m of collector) {
       split = m.content.split(' ');
+      console.log('Sections is', split);
 
       if (m.content.toLowerCase() == 'n') {
         collector.stop();
@@ -256,7 +257,7 @@ async function getCourses(): Promise<string[]> {
         }
       );
     } catch (err) {
-     if (!err.message.includes(`failed`) && !err.message.includes(`sorry`)) {
+      if (!err.message.includes(`failed`) && !err.message.includes(`sorry`)) {
         console.log(err);
       }
     }
