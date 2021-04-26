@@ -50,6 +50,7 @@ export default abstract class Tag {
 
     for await (const m of collector1) {
       split = m.content.split(' ');
+      console.log('Sections is', split);
 
       if (m.content.toLowerCase() == 'n') {
         collector1.stop();
@@ -114,6 +115,7 @@ export default abstract class Tag {
 
     for await (const m of collector2) {
       split = m.content.split(' ');
+      console.log('IDs is', split);
 
       if (m.content.toLowerCase() == 'n') {
         collector2.stop();
