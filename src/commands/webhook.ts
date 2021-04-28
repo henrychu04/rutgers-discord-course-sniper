@@ -40,6 +40,20 @@ export default abstract class Webhook {
               }
             });
         } catch (err) {
+          if (usersArray.length != 0) {
+            let user = usersArray[0];
+
+            await message.channel
+              .send(
+                '```' +
+                  `User webhook link not valid, current user webhook is '${user.webhook}'\nInput a new webhook link with the command'!webhook'` +
+                  '```'
+              )
+              .then(() => {
+                console.log('Invalid webhook message sent');
+              });
+          }
+
           console.log(err);
         }
 
