@@ -64,6 +64,7 @@ export default abstract class Webhook {
           collector.stop();
           stopped = true;
           webhook = m.content;
+          console.log('Webhook is', webhook);
         }
       }
 
