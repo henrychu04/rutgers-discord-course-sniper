@@ -25,20 +25,27 @@ export default abstract class Webhook {
         let webhook = new Discord.WebhookClient(id, token);
 
         try {
-          await webhook
-            .send('```' + 'Test Success' + '```')
-            .then(() => {
-              console.log('Webhook tested successfully\n');
-            })
-            .catch((err) => {
-              if (err.message == 'Unknown Webhook') {
-                throw new Error('Unknown webhook');
-              } else if (err.message == 'Invalid Webhook Token') {
-                throw new Error('Invalid webhook token');
-              } else {
-                throw new Error(err);
-              }
-            });
+          if (user.webhook.length == 0) {
+            await message.channel.send(
+              '```' + `No webhook detected\nInput a webhook with the command '!webhook'` + '```'
+            );
+            console.log('Empty webhook message sent\n');
+          } else {
+            await webhook
+              .send('```' + 'Test Success' + '```')
+              .then(() => {
+                console.log('Webhook tested successfully\n');
+              })
+              .catch((err) => {
+                if (err.message == 'Unknown Webhook') {
+                  throw new Error('Unknown webhook');
+                } else if (err.message == 'Invalid Webhook Token') {
+                  throw new Error('Invalid webhook token');
+                } else {
+                  throw new Error(err);
+                }
+              });
+          }
         } catch (err) {
           if (usersArray.length != 0) {
             let user = usersArray[0];
