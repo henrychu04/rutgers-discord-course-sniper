@@ -63,9 +63,12 @@ export class Monitor extends EventEmitter {
       const crntDate = moment().tz('America/New_York');
 
       if (crntDate.hour() > 22 || crntDate.hour() < 7) {
-        console.log(`Hours is ${crntDate.hour()}`);
-        console.log('Sleeping ... waiting one hour\n');
-        await sleep(oneHour);
+        let crntMin = crntDate.minute();
+        let difference = 60 - crntMin;
+        let converted = difference * 60000;
+        let added = oneHour - converted;
+        console.log(`Sleeping ... waiting ${difference} minutes\n`);
+        await sleep(added);
         continue;
       }
 
