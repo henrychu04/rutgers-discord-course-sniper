@@ -66,10 +66,9 @@ export class Monitor extends EventEmitter {
         let crntMin = crntDate.minute();
         let difference = 60 - crntMin;
         let converted = difference * 60000;
-        let added = oneHour - converted;
         console.log(`Hours is ${crntDate.hour()}`);
         console.log(`Sleeping ... waiting ${difference} minutes\n`);
-        await sleep(added);
+        await sleep(converted);
         continue;
       }
 
