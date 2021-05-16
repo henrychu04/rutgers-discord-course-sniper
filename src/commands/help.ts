@@ -21,7 +21,9 @@ export default abstract class Help {
         },
         { name: '!webhook test', value: `Test the user's webhook link to receive notifications`, inline: false },
         { name: '!tag', value: 'Tag a user when a specified section opens up', inline: false },
-        { name: '!tagremove', value: 'Remove a user tag when a specified section opens up', inline: false }
+        { name: '!tagremove', value: 'Remove a user tag when a specified section opens up', inline: false },
+        { name: '!usedm', value: 'Change the open section notification setting to DMs', inline: false },
+        { name: '!usewebhook', value: 'Change the open section notification setting to webhook', inline: false }
       )
       .setTimestamp();
 
