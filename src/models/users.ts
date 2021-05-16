@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 
 const UserSchema = new Schema({
   d_id: String,
+  useWebhook: Boolean,
   webhook: String,
   courses: [Object],
 });

@@ -104,6 +104,7 @@ export default abstract class Webhook {
       if (usersArray.length == 0) {
         const newUser = new Users({
           d_id: d_id,
+          useWebhook: false,
           webhook: webhook,
           courses: [],
         });

@@ -8,17 +8,18 @@ import Settings from '../models/settings';
 import Users from '../models/users';
 
 const oneSecond = 1000;
-const oneHour = 3600000;
 
 let year: String = '';
 let term: String = '';
 
 export class Monitor extends EventEmitter {
   courses: String[] = [];
+  client: any;
 
-  constructor() {
+  constructor(client: any) {
     super();
     this.init();
+    this.client = client;
   }
 
   init = async () => {
@@ -143,6 +144,7 @@ export class Monitor extends EventEmitter {
               user: user,
               embedArray: embedArray,
               tag: tag,
+              client: this.client,
             };
 
             this.emit('open', returnObj);

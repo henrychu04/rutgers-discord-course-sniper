@@ -6,10 +6,10 @@ dotenv.config({ path: __dirname + '/../.env' });
 import monitorCourses from './scripts/monitorCourses';
 
 export class Main {
-  private static _client: Client;
+  private static client: Client;
 
   static get Client(): Client {
-    return this._client;
+    return this.client;
   }
 
   static async start() {
@@ -26,12 +26,12 @@ export class Main {
         });
     }
 
-    this._client = new Client();
+    this.client = new Client();
 
-    this._client.login(process.env.BOT_TOKEN, `${__dirname}/events/*.ts`, `${__dirname}/events/*.js`).then(() => {
-      monitorCourses();
+    this.client.login(process.env.BOT_TOKEN, `${__dirname}/events/*.ts`, `${__dirname}/events/*.js`).then(() => {
+      monitorCourses(this.client);
       console.log('Ready!\n');
-      this._client.user.setActivity(`'!help' for all commands`);
+      this.client.user.setActivity(`'!help' for all commands`);
     });
   }
 }

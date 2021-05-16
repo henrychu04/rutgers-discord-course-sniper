@@ -1,4 +1,4 @@
-import { Command, CommandMessage, Guard } from '@typeit/discord';
+import { Command, Client, CommandMessage, Guard } from '@typeit/discord';
 import { NotBot } from '../guards/notABot';
 import { admin } from '../guards/admin';
 
@@ -10,7 +10,7 @@ export default abstract class on {
   @Command('on')
   @Guard(NotBot)
   @Guard(admin)
-  async on(message: CommandMessage) {
+  async on(message: CommandMessage, client: Client) {
     await message.channel.send('```' + `Entered command is '!on'\nConfirm with 'y' or 'n'` + '```');
 
     let stopped = false;
@@ -51,7 +51,7 @@ export default abstract class on {
         })
         .catch((err) => console.log(err));
 
-      monitorCourses();
+      monitorCourses(client);
     } else {
       await message.channel.send('```Monitoring is already on```');
       console.log('!on completed\n');
