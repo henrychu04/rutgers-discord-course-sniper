@@ -19,7 +19,7 @@ export default async (
       .get(user.d_id)
       .send(body)
       .then(() => {
-        console.log(`User: ${user.d_id}\nSuccessfully sent webhook notification\n`);
+        console.log(`User: ${user.d_id}\nSuccessfully sent dm notification\n`);
       });
   } catch (err) {
     console.log(err);
