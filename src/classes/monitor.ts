@@ -99,7 +99,7 @@ export class Monitor extends EventEmitter {
             const millis = now - course.time;
             const elapsed = Math.floor(millis / 1000); // convert to seconds
 
-            if (newOpen.includes(course.num) && elapsed > 60) {
+            if (newOpen.includes(course.num) && elapsed > 300) {
               let changed = {
                 name: course.name,
                 num: course.num,
