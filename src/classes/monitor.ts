@@ -87,8 +87,8 @@ export class Monitor extends EventEmitter {
         this.courses = newCourses;
 
         // const users: any[] = [];
-        // const users: any[] = await Users.find();
-        const users: any[] = await Users.find({ d_id: '504000540804382741' });
+        const users: any[] = await Users.find();
+        // const users: any[] = await Users.find({ d_id: '504000540804382741' });
 
         const now = Date.now();
 
