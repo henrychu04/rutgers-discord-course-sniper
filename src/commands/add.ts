@@ -237,10 +237,11 @@ async function getCourses(): Promise<string[]> {
   let month = date.getMonth() + 1;
   let term = '';
 
-  if (month > 3 && month < 11) {
+  if (month > 3 && month < 10) {
     term = String(9);
-  } else if (month > 11 && month < 4) {
+  } else if (month > 10 || month < 4) {
     term = String(1);
+    year = String(Number(year) + 1)
   }
 
   let success = false;

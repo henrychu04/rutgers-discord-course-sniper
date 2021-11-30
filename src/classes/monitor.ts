@@ -27,10 +27,11 @@ export class Monitor extends EventEmitter {
     year = String(date.getFullYear());
     let month: Number = date.getMonth() + 1;
 
-    if (month > 3 && month < 11) {
+    if (month > 3 && month < 10) {
       term = String(9);
-    } else if (month > 11 && month < 4) {
+    } else if (month > 10 || month < 4) {
       term = String(1);
+      year = String(Number(year) + 1);
     }
 
     while (1) {
@@ -86,8 +87,8 @@ export class Monitor extends EventEmitter {
         this.courses = newCourses;
 
         // const users: any[] = [];
-        const users: any[] = await Users.find();
-        // const users: any[] = await Users.find({ d_id: '504000540804382741' });
+        // const users: any[] = await Users.find();
+        const users: any[] = await Users.find({ d_id: '504000540804382741' });
 
         const now = Date.now();
 
