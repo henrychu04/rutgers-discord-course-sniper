@@ -11,12 +11,14 @@ export default class Snipe {
     const d_id = message.author.id;
     const snipeUsers: any[] = await Users.find({ d_id: d_id });
 
-    const embed = new Discord.MessageEmbed()
+    let embed = new Discord.MessageEmbed()
       .setColor('#FF0000')
       .setTitle('Course Sniper')
       .setURL('https://sims.rutgers.edu/webreg/')
       .setDescription('Current Snipes')
       .setTimestamp();
+
+    let i = 0;
 
     if (snipeUsers.length != 0) {
       for (let course of snipeUsers[0].courses) {
@@ -29,15 +31,26 @@ export default class Snipe {
           }
         }
 
+        if (i != 0 && i % 25 == 0) {
+          await message.channel.send(embed);
+
+          embed = new Discord.MessageEmbed().setColor('#FF0000').setTimestamp();
+        }
+
         embed.addFields({
           name: course.name,
           value: valueString,
           inline: true,
         });
+
+        ++i;
       }
     }
 
-    await message.channel.send(embed);
+    if (i != 0) {
+      await message.channel.send(embed);
+    }
+
     console.log('!snipe completed\n');
   }
 }
