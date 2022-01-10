@@ -29,9 +29,11 @@ export class Monitor extends EventEmitter {
 
     if (month > 3 && month < 10) {
       term = String(9);
-    } else if (month > 10 || month < 4) {
+    } else if (month > 10) {
       term = String(1);
       year = String(Number(year) + 1);
+    } else if (month < 4) {
+      term = String(1);
     }
 
     while (1) {
