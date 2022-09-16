@@ -3,11 +3,18 @@ import { NotBot } from '../guards/notABot';
 import Snipe from './snipe';
 
 import Users from '../models/users';
+import Settings from '../models/settings';
 
 export default abstract class Tag {
   @Command('tag')
   @Guard(NotBot)
   async tag(message: CommandMessage): Promise<void> {
+    const status = await Settings.find();
+    if (!status[0].status) {
+      await message.channel.send('```' + `Course monitor is off, exiting` + '```');
+      return;
+    }
+
     const d_id: string = message.author.id;
     const snipeUsersArray: any[] = await Users.find({ d_id: d_id });
 

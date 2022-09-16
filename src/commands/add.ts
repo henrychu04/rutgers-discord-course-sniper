@@ -5,11 +5,22 @@ import { NotBot } from '../guards/notABot';
 import Course from '../classes/course';
 
 import Users from '../models/users';
+import Settings from '../models/settings';
 
 export default abstract class Add {
   @Command('add')
   @Guard(NotBot)
   async add(message: CommandMessage) {
+    const status = await Settings.find();
+    if (!status[0].status) {
+      await message.channel.send(
+        '```' +
+          `Course monitor is off, exiting` +
+          '```'
+      );
+      return;
+    }
+
     const d_id: string = message.author.id;
     let usersArray: any[] = await Users.find({ d_id: d_id });
 
@@ -241,7 +252,7 @@ async function getCourses(): Promise<string[]> {
     term = String(9);
   } else if (month > 10) {
     term = String(1);
-    year = String(Number(year) + 1)
+    year = String(Number(year) + 1);
   } else if (month < 4) {
     term = String(1);
   }
